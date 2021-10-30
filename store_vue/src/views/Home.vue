@@ -46,6 +46,7 @@ export default {
   },
   mounted(){
     this.getLatestProducts()
+    document.title = 'Home | Official Boots Kenya'
   },
   methods:{
     getLatestProducts(){

@@ -11,8 +11,8 @@
      </div>
      <div class="navbar-menu" id="navbar-menu" v-bind:class="{'is-active':showMobileMenu}">
        <div class="navbar-end">
-         <router-link to="/brown" class="navbar-item">Brown</router-link>
-         <router-link to="/black" class="navbar-item">Black</router-link>
+         <router-link to="/official" class="navbar-item">Official</router-link>
+         <router-link to="/casual" class="navbar-item">Casual</router-link>
          <div class="navbar-item">
            <div class="buttons">
              <router-link to="/log-in" class="button is-light">Log In</router-link>
