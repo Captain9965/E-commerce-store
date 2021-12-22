@@ -60,7 +60,7 @@ export default{
             .post("api/v1/token/login/", formData)
             .then(response=>{
                 const token = response.data.auth_token
-                this.store.commit('setToken',token)
+                this.$store.commit('setToken',token)
                 axios.defaults.headers.common["Authorization"] = "Token" + token
                 localStorage.setItem("token", token)
                 const toPath = this.$route.query.to || '/cart'     
@@ -72,9 +72,9 @@ export default{
                                 this.errors.push(`${property}: ${error.response.data[property]}`)
                             }
                             console.log(JSON.stringify(error.response.data))
-                        } else{
+                        } else if (error.message){
                             this.errors.push('Something went wrong. Please try again')
-                            console.log(JSON.stringify(error))
+                            console.log(JSON.stringify(error.message))
                         }
             })
         }
