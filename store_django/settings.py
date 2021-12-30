@@ -26,7 +26,8 @@ SECRET_KEY = 'django-insecure-s9uak&^0uico%_-yw6+o&dt06+6s+b^*pv)hzu7-!3(kw^9atl
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+#MPESA SECRET:
+MPESA_SECTET_KEY = 'TYTYURDFdfjtujopqjui'
 
 # Application definition
 
@@ -44,6 +45,7 @@ INSTALLED_APPS = [
     'djoser',
 
     'product',
+    'order'
 ]
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8080"
