@@ -163,10 +163,10 @@ export default {
                 'first_name': this.first_name,
                 'last_name': this.last_name,
                 'email': this.email,
-                'delivery_address': this.delivery_address,
+                'delivery_address': this.place,
                 'phone': this.phone,
-                'items': this.items,
-                'mpesa_token': token.id
+                'items': items,
+                'transaction_id': token.id
             }
             await axios
                 .post('api/v1/checkout/',data)

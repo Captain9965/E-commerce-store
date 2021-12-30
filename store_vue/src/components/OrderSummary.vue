@@ -20,7 +20,7 @@
                     <td>{{ item.product.name }}</td>
                     <td>{{ item.product.price }}</td>
                     <td>{{ item.quantity }}</td>
-                    <td>Ksh.{{ getItemTotal(item).tofixed(2)}}</td>
+                    <td>Ksh.{{ getItemTotal(item).toFixed(2)}}</td>
                 </tr>
             </tbody>
         </table>

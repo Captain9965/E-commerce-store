@@ -9,7 +9,7 @@ class MyOrderItemSerializer(serializers.ModelSerializer):
         fields = (
             "price",
             "product",
-            "quantitiy",
+            "quantity",
         )
 class MyOrderSerializer(serializers.ModelSerializer):
     items = MyOrderItemSerializer(many =True)
@@ -32,7 +32,7 @@ class OrderItemSerializer(serializers.ModelSerializer):
         fields = (
             "price",
             "product",
-            "quantitiy",
+            "quantity",
         )
 class OrderSerializer(serializers.ModelSerializer):
     items = OrderItemSerializer(many =True)
@@ -54,4 +54,4 @@ class OrderSerializer(serializers.ModelSerializer):
 
         for item_data in items_data:
             OrderItem.objects.create(order=order, **item_data)
-            return order
+        return order
