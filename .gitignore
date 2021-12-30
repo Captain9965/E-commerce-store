@@ -22,4 +22,5 @@ pnpm-debug.log*
 *.sln
 *.sw?
 /venv
-**/__pycache__
+__pycache__/.
+*.pyc
