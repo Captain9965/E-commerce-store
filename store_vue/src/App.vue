@@ -2,7 +2,11 @@
  <div id="wrapper">
    <nav class="navbar is-dark">
      <div class="navbar-brand">
-       <router-link to="/" class="navbar-item"><strong>Official Shoes</strong></router-link>
+       <router-link to="/" class="navbar-item">
+        <i class="fas fa-light fa-shoe-prints"></i>
+        <i class="ml-2"></i>
+        <strong>Official Boots Kenya</strong>
+       </router-link>
        <a class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbar-menu" @click="showMobileMenu = !showMobileMenu">
          <span aria-hidden="true"></span>
          <span aria-hidden="true"></span>
@@ -57,7 +61,7 @@
     <router-view/>
    </section>
    <footer class="footer">
-     <p class="has-text-centered">Copyright (c) 2021</p>
+     <p class="has-text-centered">Copyright (c) 2022</p>
    </footer>
  </div>
 </template>
