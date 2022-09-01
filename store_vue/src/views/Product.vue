@@ -5,12 +5,12 @@
               <figure class="image mb-6">
                   <img v-bind:src="product.get_image">
               </figure>
-              <h1 class="title">{{product.name}}</h1>
-              <p>{{product.description}}</p>
+              <h1 class="title has-text-warning">{{product.name}}</h1>
+              <p class="has-text-primary-dark">{{product.description}}</p>
           </div>
           <div class="column is-3">
-              <h2 class="subtitle">Information</h2>
-              <p><strong>Price:</strong>Ksh.{{product.price}}</p>
+              <h2 class="subtitle has-text-warning">Information</h2>
+              <p class="has-text-primary-dark"><strong class="has-text-warning">Price: </strong>Ksh.{{product.price}}</p>
 
               <div class="field has-addons mt-6">
                   <div class="control">

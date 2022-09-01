@@ -1,15 +1,19 @@
 <template>
- <div id="wrapper">
+ <div class="wrapper bck-image container-flex">
    <nav class="navbar is-dark">
      <div class="navbar-brand">
-       <router-link to="/" class="navbar-item"><strong>Official Shoes</strong></router-link>
-       <a class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbar-menu" @click="showMobileMenu = !showMobileMenu">
+       <router-link to="/" class="navbar-item">
+        <i class="fas fa-light fa-shoe-prints"></i>
+        <i class="ml-2"></i>
+        <strong class="has-text-warning">Official Boots Kenya</strong>
+       </router-link>
+       <a class="navbar-burger bck-dark" aria-label="menu" aria-expanded="false" data-target="navbar-menu" @click="showMobileMenu = !showMobileMenu">
          <span aria-hidden="true"></span>
          <span aria-hidden="true"></span>
          <span aria-hidden="true"></span>
        </a>
      </div>
-     <div class="navbar-menu" id="navbar-menu" v-bind:class="{'is-active':showMobileMenu}">
+     <div class="navbar-menu" id="navbar-menu" v-bind:class="{'is-active':showMobileMenu,'bck-dark': showMobileMenu}">
        <div class="navbar-start">
          <div class="navbar-item">
            <form method="get" action="/search">
@@ -29,8 +33,8 @@
          </div>
        </div>
        <div class="navbar-end">
-         <router-link to="/official" class="navbar-item">Official</router-link>
-         <router-link to="/casual" class="navbar-item">Casual</router-link>
+          <router-link id="link1" to="/official" class="navbar-item has-text-primary">Official</router-link>
+          <router-link id="link2" to="/casual" class="navbar-item has-text-primary">Casual</router-link>
          <div class="navbar-item">
            <div class="buttons">
              <template v-if="$store.state.isAuthenticated">
@@ -52,12 +56,12 @@
      <div class="lds-dual-ring">
      </div>
    </div>
-   <section class="section">
+   <section class="section section-flex">
 
     <router-view/>
    </section>
-   <footer class="footer">
-     <p class="has-text-centered">Copyright (c) 2021</p>
+   <footer class="pb-6">
+     <p class="has-text-centered has-text-warning">Copyright (c) 2022</p>
    </footer>
  </div>
 </template>
@@ -67,9 +71,6 @@ export default{
   data(){
     return{
       showMobileMenu:false,
-      cart: {
-        items:[]
-      }
     }
   },
   beforeCreate(){
@@ -81,14 +82,11 @@ export default{
       axios.defaults.headers.common['Authorization'] = ""
     }
   },
-   mounted(){
-    this.cart = this.$store.state.cart
-  },
   computed:{
     cartTotalLength(){
       let totalLength = 0
-      for (let i=0; i< this.cart.items.length;i++){
-        totalLength += this.cart.items[i].quantity
+      for (let i=0; i< this.$store.state.cart.items.length;i++){
+        totalLength += this.$store.state.cart.items[i].quantity
       }
       return totalLength
     }
@@ -129,5 +127,29 @@ export default{
   &.is-loading{
     height: 80px;
   }
+}
+.bck-image{
+  background-image: linear-gradient(rgba(0,0,0,0.9), rgba(0,0,0,0.9)),url("./assets/Official_boots_Kenya_logo.jpeg");
+  height: 50%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  background-attachment: fixed;
+}
+
+.container-flex{
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.section-flex{
+  flex: 1;
+}
+.bck-dark{
+  background-color:#2f2f2f;
+}
+#link1:hover,#link2:hover{
+  background-color: black;
 }
 </style>

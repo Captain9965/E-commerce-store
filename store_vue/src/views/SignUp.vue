@@ -2,22 +2,22 @@
     <div class="page-sign-up">
         <div class="columns">
             <div class="column is-4 is-offset-4">
-                <h1 class="title ">Sign Up</h1>
+                <h1 class="title has-text-primary">Sign Up</h1>
                 <form @submit.prevent="submitForm">
                     <div  class="field">
-                    <label>Username</label>
+                    <label class="has-text-info">Username</label>
                         <div class="control">
                             <input type="text" class="input" v-model= "username">
                         </div>
                     </div>
                     <div  class="field">
-                    <label>Password</label>
+                    <label class="has-text-info">Password</label>
                         <div class="control">
                             <input type="password" class="input" v-model= "password">
                         </div>
                     </div>
                     <div  class="field">
-                    <label>Repeat Password</label>
+                    <label class="has-text-info">Repeat Password</label>
                         <div class="control">
                             <input type="password" class="input" v-model= "password2">
                         </div>
@@ -33,7 +33,9 @@
 
                     </div>
                     <hr>
-                    Or <router-link to="/log-in">click here </router-link>to log in!
+                    <p class="has-text-warning">
+                        Or <router-link class="has-text-primary" to="/log-in">click here </router-link>to log in!
+                    </p>
                 </form>
             </div>
         </div>
@@ -74,7 +76,7 @@ export default{
                     .then(response =>{
                         toast({
                             message:'Account created, please log in',
-                            type: is-success,
+                            type: 'is-success',
                             dismissible: true,
                             pauseOnHover: true,
                             duration: 2000,

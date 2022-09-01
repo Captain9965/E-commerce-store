@@ -2,16 +2,16 @@
     <div class="page-sign-up">
         <div class="columns">
             <div class="column is-4 is-offset-4">
-                <h1 class="title ">Log In</h1>
+                <h1 class="title has-text-primary">Log In</h1>
                 <form @submit.prevent="submitForm">
                     <div  class="field">
-                    <label>Username</label>
+                    <label class="has-text-info">Username:</label>
                         <div class="control">
                             <input type="text" class="input" v-model= "username">
                         </div>
                     </div>
                     <div  class="field">
-                    <label>Password</label>
+                    <label class="has-text-info">Password:</label>
                         <div class="control">
                             <input type="password" class="input" v-model= "password">
                         </div>
@@ -27,7 +27,9 @@
 
                     </div>
                     <hr>
-                    Or <router-link to="/sign-up">click here </router-link>to sign up!
+                    <p class="has-text-warning">
+                        Or <router-link class="has-text-success" to="/sign-up">click here </router-link>to sign up!
+                    </p>
                 </form>
             </div>
         </div>
@@ -84,3 +86,8 @@ export default{
     }
 }
 </script>
+<style scoped>
+.bck-light-grey{
+    background-color: #999DA0;
+}
+</style>

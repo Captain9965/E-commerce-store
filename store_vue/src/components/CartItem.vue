@@ -1,10 +1,10 @@
 <template>
     <tr>
-        <td><router-link :to ="item.product.get_absolute_url">{{ item.product.name }}</router-link></td>
+        <td><router-link :to ="item.product.get_absolute_url" class="has-text-warning">{{ item.product.name }}</router-link></td>
         <td>{{ item.product.price }}</td>
         <td>{{ item.quantity }}
-            <a @click="decrementQuantity(item)">-</a>
-            <a @click="incrementQuantity(item)">+</a>
+            <a @click="decrementQuantity(item)" class="ml-2 mr-2 has-text-danger">-</a>
+            <a @click="incrementQuantity(item)" class="has-text-primary">+</a>
         </td>
 
         <td>{{ getItemTotal(item).toFixed(2) }}</td>

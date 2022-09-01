@@ -2,16 +2,16 @@
     <div class="page-checkout">
         <div class="columns is-multiline">
             <div class="column is-12">
-                <h1 class="title">Checkout</h1>
+                <h1 class="has-text-primary title">Checkout</h1>
             </div>
-            <div class="column is-12 box">
-                <table class="table is-fullwidth" v-if="cartTotalLength">
+            <div class="bck-grey column is-12 box">
+                <table class=" has-text-warning bck-grey table is-fullwidth" v-if="cartTotalLength">
                     <thead>
                         <tr>
-                            <th>Product</th>
-                            <th>Price</th>
-                            <th>Quantity</th>
-                            <th>Total</th>
+                            <th class="has-text-warning">Product</th>
+                            <th class="has-text-warning">Price</th>
+                            <th class="has-text-warning">Quantity</th>
+                            <th class="has-text-warning">Total</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -28,48 +28,50 @@
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td colspan="2">Total</td>
-                            <td>{{cartTotalLength}}</td>
-                            <td>Ksh.{{cartTotalPrice.toFixed(2)}}</td>
+                            <td colspan="2" class="has-text-warning">Total</td>
+                            <td class="has-text-warning">{{cartTotalLength}}</td>
+                            <td class="has-text-warning">Ksh.{{cartTotalPrice.toFixed(2)}}</td>
                         </tr>
                     </tfoot>
                 </table>
                 <p v-else> No items to check out....</p>
             </div>
         </div>
-        <div class="column is-12 box">
-            <h2 class="subtitle">Delivery Details</h2>
-            <p class="has-text-grey mb-4">*All fields are required</p>
+        <div class="column is-12">
+                <h1 class="has-text-primary title">Delivery Details</h1>
+        </div>
+        <div class="bck-grey column is-12 box">
+            <p class="has-text-danger mb-4">*All fields are required</p>
             <div class="columns is-multiline">
                 <div class="column is-6">
                     <div class="field">
-                        <label>First Name*</label>
+                        <label class="has-text-warning">First Name*</label>
                         <div class="control">
-                            <input type="text" class="input" v-model="first_name">
+                            <input type="text" class="input bck-light-grey" v-model="first_name">
                         </div>
                     </div>
                     <div class="field">
-                        <label>Last Name*</label>
+                        <label class="has-text-warning">Last Name*</label>
                         <div class="control">
-                            <input type="text" class="input" v-model="last_name">
+                            <input type="text" class="input bck-light-grey" v-model="last_name">
                         </div>
                     </div>
                     <div class="field">
-                        <label>Email*</label>
+                        <label class="has-text-warning">Email*</label>
                         <div class="control">
-                            <input type="email" class="input" v-model="email">
+                            <input type="email" class="input bck-light-grey" v-model="email">
                         </div>
                     </div>
                     <div class="field">
-                        <label>Phone Number*</label>
+                        <label class="has-text-warning">Phone Number*</label>
                         <div class="control">
-                            <input type="text" class="input" v-model="phone">
+                            <input type="text" class="input bck-light-grey" v-model="phone">
                         </div>
                     </div>
                     <div class="field">
-                        <label>Delivery Address*</label>
+                        <label class="has-text-warning">Delivery Address*</label>
                         <div class="control">
-                            <input type="text" class="input" v-model="place">
+                            <input type="text" class="input bck-light-grey" v-model="place">
                         </div>
                     </div>
                 </div>
@@ -77,11 +79,10 @@
              <div class="notification is-danger mt-4" v-if="errors.length">
                     <p v-for="error in errors" v-bind:key="error">{{error}}</p>
                 </div>
-                <hr>
                 <div id="card-element" class="mb-5"></div>
                 <template v-if="cartTotalLength">
                     <hr>
-                    <button class="button is-dark" @click="submitForm">Pay with Mpesa</button>
+                    <button class="button is-black has-text-primary" @click="submitForm">Pay with Mpesa</button>
                 </template>
         </div>
     </div>
@@ -142,7 +143,7 @@ export default {
                 //     }
                 // })
                 const testToken = {
-                    id: '239596'
+                    id: '239596js'
                 }
                 this.mpesaTokenhandler(testToken)
                 
@@ -195,3 +196,11 @@ export default {
     }
 }
 </script>
+<style scoped>
+    .bck-grey{
+      background-color:#363636;
+    }
+    .bck-light-grey{
+        background-color: #999DA0;
+    }
+</style>

@@ -2,8 +2,8 @@
     <div class="page-search">
         <div class="columns is-multiline">
             <div class="column is-12">
-                <h1 class="title">Search</h1>
-                <h2 class="is-size-5 has-text-grey">Search term: "{{query}}"</h2>
+                <h1 class="title has-text-primary">Search</h1>
+                <h2 class="is-size-5 has-text-info">Search term: "{{query}}"</h2>
             </div>
             <ProductBox
             v-for = "product in products"

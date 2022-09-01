@@ -1,9 +1,9 @@
 <template>
     <div class="box mb-4">
-        <h3 class="is-size-4 mb-6">Order #{{order.id}}</h3>
-        <h4 class="is-size-5">Products</h4>
-        <table class="table is-fullwidth">
-            <head>
+        <h3 class="has-text-warning is-size-4 mb-6">Order #{{order.id}}</h3>
+        <h4 class="has-text-warning is-size-5">Products</h4>
+        <table class="bck-grey table is-fullwidth">
+            <head class="has-text-warning">
                 <tr>
                     <th>Product</th>
                     <th>Price</th>
@@ -11,7 +11,7 @@
                     <th>Total</th>
                 </tr>
             </head>
-            <tbody>
+            <tbody class="has-text-warning">
                 <tr
                     v-for="item in order.items"
                     v-bind:key="item.product.id"
@@ -44,3 +44,11 @@ export default {
     }
 }
 </script>
+<style scoped>
+    .bck-grey{
+      background-color:#363636;
+    }
+    .bck-light-grey{
+        background-color: #999DA0;
+    }
+</style>

@@ -16,6 +16,7 @@ from .serializers import OrderSerializer, MyOrderSerializer
 @authentication_classes([authentication.TokenAuthentication])
 @permission_classes([permissions.IsAuthenticated])
 def checkout(request):
+    print(request.data)
     serializer = OrderSerializer(data = request.data)
     
     if serializer.is_valid():
@@ -29,7 +30,7 @@ def checkout(request):
             return Response(serializer.data, status = status.HTTP_201_CREATED)
         except Exception:
             return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
-    print("serializer error")
+    print(serializer.errors)
     return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
 
 class OrdersList(APIView):

@@ -2,15 +2,16 @@
     <div class="page-my-account">
         <div class="columns is-multiline">
             <div class="column is-12">
-                <h1 class="title"> My Account</h1>
+                <h1 class="title has-text-primary"> My Account</h1>
             </div>
             <div class="column is-12">
                 <button @click="logout()" class="button is-danger"> Log Out</button>
             </div>
             <hr>
             <div class="column is-12">
-                <h2 class="subtitle">My Orders</h2>
+                <h2 class="subtitle has-text-primary">My Orders</h2>
                 <OrderSummary
+                    class="bck-grey"
                     v-for="order in orders"
                     v-bind:key="order.id"
                     v-bind:order="order"
@@ -60,3 +61,11 @@ export default {
     }
 }
 </script>
+<style scoped>
+    .bck-grey{
+      background-color:#363636;
+    }
+    .bck-light-grey{
+        background-color: #999DA0;
+    }
+</style>
