@@ -2,17 +2,17 @@
     <div class="page-cart">
         <div class = "columns is-multiline">
             <div class = "column is-12">
-                <h1 class="title">Cart</h1>
+                <h1 class="has-text-primary title">Cart</h1>
             </div>
-            <div class="column is-12 box">
-                <table class="table is-fullwidth" v-if="cartTotalLength">
+            <div class="bck-grey column is-12 box">
+                <table class="bck-grey has-text-warning table is-fullwidth" v-if="cartTotalLength">
                     <thead>
                         <tr>
-                            <th>Product</th>
-                            <th>Price</th>
-                            <th>Quantity</th>
-                            <th>Total</th>
-                            <th></th>
+                            <th class="has-text-warning">Product</th>
+                            <th class="has-text-warning">Price</th>
+                            <th class="has-text-warning">Quantity</th>
+                            <th class="has-text-warning">Total</th>
+                            <th ></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -24,13 +24,13 @@
                         />
                     </tbody>
                 </table>
-                <p v-else> You dont have any products in your cart....</p>
+                <p v-else class="has-text-warning"> You dont have any products in your cart....</p>
             </div>
-            <div class="column is-12 box">
-                <h2 class="subtitle">Summary</h2>
-                <strong>Ksh.{{ cartTotalPrice.toFixed(2)}}</strong>, {{ cartTotalLength }} items
+            <h2 class="subtitle has-text-primary">Summary</h2>
+            <div class="has-text-warning bck-grey column is-12 box">
+                <strong class="has-text-info">Ksh.{{ cartTotalPrice.toFixed(2)}}</strong> , {{ cartTotalLength }} items
                 <hr>
-                <router-link to="/cart/checkout" class="button is-dark">Proceed to checkout</router-link>
+                <router-link to="/cart/checkout" class="button is-black has-text-info">Proceed to checkout</router-link>
             </div>
         </div>
     </div>
@@ -72,3 +72,11 @@ export default{
     }
 }
 </script>
+<style scoped>
+.bck-grey{
+  background-color:#363636;
+}
+.bck-light-grey{
+  background-color: #999DA0;
+}
+</style>

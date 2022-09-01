@@ -1,18 +1,23 @@
 <template>
   <div class="home">
-    <section  class="hero is-medium is-dark mb-6">
+    <section  class="hero is-medium has-background-black mb-6 semi-opaque">
+      <div>
+        <figure class="image is-3by2">
+          <img src="../assets/Official_boots_Kenya_logo.jpeg">
+        </figure>
+      </div>
       <div class="hero-body has-text-centered">
-        <p class="title mb=6">
+        <p class="title mb=6 has-text-warning">
           Welcome to Official Boots Kenya
         </p>
-        <p class="subtitle">
+        <p class="subtitle has-text-warning">
           We offer the best value for your money!
         </p>
       </div>
     </section>
     <div class="columns is-multiline">
       <div class="column is-12">
-        <h2 class="is-size-2 has-text-centered"> Latest stock </h2>
+        <h2 class="is-size-2 has-text-centered has-text-warning"> Latest stock </h2>
       </div>
       <ProductBox
         v-for = "product in latestProducts"
@@ -55,4 +60,8 @@ export default {
   }
 }
 </script>
-
+<style>
+.semi-opaque{
+  opacity: .7;
+}
+</style>
