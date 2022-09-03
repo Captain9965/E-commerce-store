@@ -20,15 +20,31 @@
                     <td>{{ item.product.name }}</td>
                     <td>{{ item.product.price }}</td>
                     <td>{{ item.quantity }}</td>
-                    <td>Ksh.{{ getItemTotal(item).toFixed(2)}}</td>
+                    <td>Ksh.{{ parseInt(getItemTotal(item))}}</td>
                 </tr>
             </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="2" class="has-text-warning">Total</td>
+                    <td class="has-text-warning">{{orderTotalLength(order)}}</td>
+                    <td class="has-text-warning">Ksh.{{orderTotalPrice(order)}} </td>
+                </tr>
+            </tfoot>
         </table>
+        <div>
+            <button class="button is-black has-text-primary" @click="submitPayRequest" v-if="paymentPending"> Pay Now with Mpesa</button>
+        </div>
     </div>
 </template>
 <script>
+    import axios from 'axios'
 export default {
     name: 'OrderSummary',
+    data(){
+        return{
+            errors: [],
+        }
+    },
     props:{
         order:Object
     },
@@ -40,6 +56,36 @@ export default {
             return order.items.reduce((acc, curVal) =>{
                 return acc +=curVal.quantity
             },0)
+        },
+        orderTotalPrice(order){
+            return order.items.reduce((acc, curVal)=>{
+                return parseInt(acc += (curVal.product.price * curVal.quantity))
+            },0)
+        },
+        async submitPayRequest(){
+            this.errors = []
+            this.$store.commit('setIsLoading', true)
+            console.log("Sending request with order")
+            console.log(this.order)
+            await axios
+                .post('api/v1/order/pay/',this.order)
+                .then(response=>{
+                    this.$router.push('/cart/success/')
+                })
+                /**@todo: show errors on ui */
+                .catch(error=>{
+                    this.errors.push('something went wrong. please try again')
+                    console.log(error)
+                })
+            this.$store.commit('setIsLoading', false)
+        }
+    },
+    computed:{
+        paymentPending(){
+            return !this.order.paid
+        },
+        sendingPayRequest(){
+            return this.$store.state.isLoading
         }
     }
 }

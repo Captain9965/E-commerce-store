@@ -11,7 +11,11 @@ class Order(models.Model):
     phone = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
     paid_amount = models.DecimalField(max_digits=8, decimal_places=2, blank=2, null=True)
-    transaction_id = models.CharField(max_length=100)
+    amount_due = models.DecimalField(max_digits=8, decimal_places= 2, blank= 2, null=True)
+    paid = models.BooleanField(default=False, null=False)
+    processed = models.BooleanField(default=False, null=False)
+    transaction_id = models.CharField(max_length=50, null=True)
+    checkoutRequestId = models.CharField(max_length= 50, null=True)
     class Meta:
         ordering = ['-created_at',]
     def __str__(self):

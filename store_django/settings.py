@@ -26,9 +26,8 @@ SECRET_KEY = 'django-insecure-s9uak&^0uico%_-yw6+o&dt06+6s+b^*pv)hzu7-!3(kw^9atl
 DEBUG = True
 
 ALLOWED_HOSTS = []
-#MPESA SECRET:
-MPESA_SECTET_KEY = 'TYTYURDFdfjtujopqjui'
 
+MPESA_API_BASE_URL = "8522-197-156-143-10.eu.ngrok.io"
 # Application definition
 
 INSTALLED_APPS = [
@@ -143,3 +142,4 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_URL ='/media/'
 MEDIA_ROOT = BASE_DIR / 'media/'
+
