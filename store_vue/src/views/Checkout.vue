@@ -23,14 +23,14 @@
                             <td>{{item.product.name}}</td>
                             <td>Ksh.{{item.product.price}}</td>
                             <td>{{item.quantity}}</td>
-                            <td>Ksh.{{getItemTotal(item).toFixed(2)}}</td>
+                            <td>Ksh.{{parseInt(getItemTotal(item))}}</td>
                        </tr>
                     </tbody>
                     <tfoot>
                         <tr>
                             <td colspan="2" class="has-text-warning">Total</td>
                             <td class="has-text-warning">{{cartTotalLength}}</td>
-                            <td class="has-text-warning">Ksh.{{cartTotalPrice.toFixed(2)}}</td>
+                            <td class="has-text-warning">Ksh.{{parseInt(cartTotalPrice)}}</td>
                         </tr>
                     </tfoot>
                 </table>
@@ -82,7 +82,9 @@
                 <div id="card-element" class="mb-5"></div>
                 <template v-if="cartTotalLength">
                     <hr>
-                    <button class="button is-black has-text-primary" @click="submitForm">Pay with Mpesa</button>
+                    <button class="button is-black has-text-primary mr-4" @click="submitPayRequest">Pay now with Mpesa</button>
+
+                    <button class="button is-black has-text-info" @click="submitNoPayRequest"> Pay on delivery</button>
                 </template>
         </div>
     </div>
@@ -96,8 +98,6 @@ export default {
             cart:{
                 items:[]
             },
-            stripe:{},
-            card:{},
             first_name:'',
             last_name:'',
             email:'',
@@ -105,7 +105,10 @@ export default {
             address:'',
             zipcode:'',
             place:'',
-            errors:[]
+            errors:[],
+            payNow: true
+            
+            
         }
     },
     mounted(){
@@ -120,7 +123,23 @@ export default {
         getItemTotal(item){
             return item.quantity * item.product.price
         }, 
-        submitForm(){
+        submitPayRequest(){
+           
+            if (this.valid_inputs()){
+                this.$store.commit('setIsLoading',true)
+                this.payNow = true
+                this.sendPayRequest()
+                
+            }
+        },
+        submitNoPayRequest(){
+            if (this.valid_inputs()){
+                this.$store.commit('setIsLoading', true)
+                this.payNow = false
+                this.sendPayRequest()
+            }
+        },
+        valid_inputs(){
             this.errors = []
             if (this.first_name === ''){
                 this.errors.push('The First Name is missing')
@@ -131,25 +150,9 @@ export default {
             if (this.place === ''){
                 this.errors.push('The delivery address is missing')
             }
-            if (!this.errors.length){
-                this.$store.commit('setIsLoading',true)
-                // this.mpesa.createToken(this.phone).then(result=>{
-                //     if(result.error){
-                //         this.$store.commit('setIsLoading', false)
-                //         this.errors.push('Something went wrong with mpesa. Please try again')
-                //         console.log(result.error.message)
-                //     } else{
-                //         this.mpesaTokenHandler(result.token)
-                //     }
-                // })
-                const testToken = {
-                    id: '239596js'
-                }
-                this.mpesaTokenhandler(testToken)
-                
-            }
+            return !this.errors.length
         },
-        async mpesaTokenhandler(token){
+        async sendPayRequest(){
             const items = []
             for (let i = 0; i < this.cart.items.length; i++){
                 const item = this.cart.items[i]
@@ -167,7 +170,7 @@ export default {
                 'delivery_address': this.place,
                 'phone': this.phone,
                 'items': items,
-                'transaction_id': token.id
+                'payNow': this.payNow
             }
             await axios
                 .post('api/v1/checkout/',data)
@@ -192,6 +195,9 @@ export default {
             return this.cart.items.reduce((acc, curVal) =>{
                 return acc += curVal.quantity * curVal.product.price
             },0)
+        },
+        awaiting_pay(){
+            return this.$store.state.isLoading
         }
     }
 }

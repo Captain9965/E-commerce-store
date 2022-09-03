@@ -24,7 +24,11 @@ class MyOrderSerializer(serializers.ModelSerializer):
             "items",
             "delivery_address",
             "transaction_id",
-            "paid_amount"
+            "paid_amount",
+            "amount_due",
+            "processed",
+            "checkoutRequestId",
+            "paid"
         )
 class OrderItemSerializer(serializers.ModelSerializer):
     class Meta:
@@ -45,8 +49,7 @@ class OrderSerializer(serializers.ModelSerializer):
             "email",
             "phone",
             "items",
-            "delivery_address",
-            "transaction_id",
+            "delivery_address"
         )
     def create(self, validated_data):
         items_data = validated_data.pop('items')
