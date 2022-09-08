@@ -34,7 +34,7 @@
                         </tr>
                     </tfoot>
                 </table>
-                <p v-else> No items to check out....</p>
+                <p v-else class="has-text-warning"> No items to check out....</p>
             </div>
         </div>
         <div class="column is-12">
@@ -63,7 +63,7 @@
                         </div>
                     </div>
                     <div class="field">
-                        <label class="has-text-warning">Phone Number*</label>
+                        <label class="has-text-warning">Mpesa Number*</label>
                         <div class="control">
                             <input type="text" class="input bck-light-grey" v-model="phone">
                         </div>
@@ -76,15 +76,12 @@
                     </div>
                 </div>
             </div>
-             <div class="notification is-danger mt-4" v-if="errors.length">
-                    <p v-for="error in errors" v-bind:key="error">{{error}}</p>
-                </div>
                 <div id="card-element" class="mb-5"></div>
                 <template v-if="cartTotalLength">
                     <hr>
-                    <button class="button is-black has-text-primary mr-4" @click="submitPayRequest">Pay now with Mpesa</button>
+                    <button class="button is-black has-text-primary mr-4" @click="submitPayRequest" v-bind:class="{'is-loading':this.$store.state.isLoading}">Pay now with Mpesa</button>
 
-                    <button class="button is-black has-text-info" @click="submitNoPayRequest"> Pay on delivery</button>
+                    <button class="button is-black has-text-info" @click="submitNoPayRequest" v-bind:class="{'is-hidden': this.$store.state.isLoading}"> Pay on delivery</button>
                 </template>
         </div>
     </div>
@@ -105,7 +102,6 @@ export default {
             address:'',
             zipcode:'',
             place:'',
-            errors:[],
             payNow: true
             
             
@@ -140,17 +136,16 @@ export default {
             }
         },
         valid_inputs(){
-            this.errors = []
             if (this.first_name === ''){
-                this.errors.push('The First Name is missing')
+                this.$store.dispatch('dispatchError', 'The First Name is missing')
             }
             if (this.last_name === ''){
-                this.errors.push('The Last name is missing')
+                this.$store.dispatch('dispatchError', 'The Last Name is missing')
             }
             if (this.place === ''){
-                this.errors.push('The delivery address is missing')
+                this.$store.dispatch('dispatchError', 'The delivery address is missing')
             }
-            return !this.errors.length
+            return !this.$store.state.errors.length
         },
         async sendPayRequest(){
             const items = []
@@ -176,10 +171,18 @@ export default {
                 .post('api/v1/checkout/',data)
                 .then(response=>{
                     this.$store.commit('clearCart')
-                    this.$router.push('/cart/success')
-                })
+                    if (sessionStorage.getItem('checkoutRequestID')){
+                        sessionStorage.removeItem('checkoutRequestID')
+                        sessionStorage.setItem('checkoutRequestID', response.data.CheckoutRequestID)
+                    } else{
+                        sessionStorage.setItem('checkoutRequestID', response.data.CheckoutRequestID)
+                    }
+                    console.log(response.data.CheckoutRequestID)
+                    this.$router.push('/order/confirm')
+                    
+                })/** can  do better error handling  */
                 .catch(error=>{
-                    this.errors.push('something went wrong. please try again')
+                    this.$store.dispatch('dispatchError','something went wrong. please log in and try again')
                     console.log(error)
                 })
                 this.$store.commit('setIsLoading', false)

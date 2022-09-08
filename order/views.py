@@ -38,11 +38,12 @@ def checkout(request):
                 #at this point, we cannot confirm that the items have actually been paid for:
                 checkoutRequestID = jsonResponse.get('Response').get('CheckoutRequestID')
                 print(checkoutRequestID)
+                checkoutRequestID_dict = {"CheckoutRequestID": checkoutRequestID}
                 try:
                     serializer.save(user = request.user, amount_due = amount_due, checkoutRequestId = checkoutRequestID, paid = False)
                 except Exception as e:
                     print(e)
-                return Response(serializer.data, status = status.HTTP_201_CREATED)
+                return Response(checkoutRequestID_dict, status = status.HTTP_201_CREATED)
             else:
                 print("This customer will pay later....")
                 try:
@@ -50,7 +51,7 @@ def checkout(request):
                 except Exception as e:
                     print(e)
                 return Response(serializer.data, status = status.HTTP_201_CREATED)
-        except Exception:
+        except Exception as e:
             print(e)
             return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
     print(serializer.errors)
@@ -91,12 +92,13 @@ def payOrder(request):
         #at this point, we cannot confirm that the items have actually been paid for:
         checkoutRequestID = jsonResponse.get('Response').get('CheckoutRequestID')
         print(checkoutRequestID)
+        checkoutRequestID_dict = {"CheckoutRequestID": checkoutRequestID}
         try:
             if serializer.is_valid():
                 serializer.save(checkoutRequestId = checkoutRequestID)
         except Exception as e:
             print(e)
-        return Response(serializer.data, status = status.HTTP_201_CREATED)
+        return Response(checkoutRequestID_dict, status = status.HTTP_201_CREATED)
     except Exception as e:
         print(e)
         return Response(status=status.HTTP_400_BAD_REQUEST)

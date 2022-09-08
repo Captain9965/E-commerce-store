@@ -10,6 +10,7 @@ import LogIn from '../views/LogIn.vue'
 import MyAccount from '../views/MyAccount.vue'
 import Checkout from '../views/Checkout.vue'
 import Success from '../views/Success.vue'
+import Confirm from '../views/Confirm.vue'
 
 const routes = [
   {
@@ -62,9 +63,14 @@ const routes = [
     }
   },
   {
-    path: '/cart/success',
+    path: '/order/success',
     name: 'Success',
     component: Success,
+  },
+  {
+    path: '/order/confirm',
+    name: 'Confirm',
+    component: Confirm,
   },
   {
     path:'/:category_slug/:product_slug',

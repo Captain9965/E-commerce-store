@@ -32,7 +32,7 @@
             </tfoot>
         </table>
         <div>
-            <button class="button is-black has-text-primary" @click="submitPayRequest" v-if="paymentPending"> Pay Now with Mpesa</button>
+            <button class="button is-black has-text-primary" @click="submitPayRequest" v-if="paymentPending" v-bind:class="{'is-loading': localLoading}"> Pay Now with Mpesa</button>
         </div>
     </div>
 </template>
@@ -42,7 +42,7 @@ export default {
     name: 'OrderSummary',
     data(){
         return{
-            errors: [],
+            localLoading: false
         }
     },
     props:{
@@ -63,21 +63,26 @@ export default {
             },0)
         },
         async submitPayRequest(){
-            this.errors = []
-            this.$store.commit('setIsLoading', true)
-            console.log("Sending request with order")
-            console.log(this.order)
+            this.$store.dispatch('dispatchInfo','Sending request...')
+            this.localLoading = true
             await axios
                 .post('api/v1/order/pay/',this.order)
                 .then(response=>{
-                    this.$router.push('/cart/success/')
+                    if (sessionStorage.getItem('checkoutRequestID')){
+                        sessionStorage.removeItem('checkoutRequestID')
+                        sessionStorage.setItem('checkoutRequestID', response.data.CheckoutRequestID)
+                    } else{
+                        sessionStorage.setItem('checkoutRequestID', response.data.CheckoutRequestID)
+                    }
+                    console.log(response.data.CheckoutRequestID)
+                    this.$router.push('/order/confirm')
                 })
-                /**@todo: show errors on ui */
+                /**@todo: how do I show errors on ui? */
                 .catch(error=>{
-                    this.errors.push('something went wrong. please try again')
+                    this.$store.dispatch('dispatchError','Something went wrong, try again')
                     console.log(error)
                 })
-            this.$store.commit('setIsLoading', false)
+            this.localLoading = false
         }
     },
     computed:{
