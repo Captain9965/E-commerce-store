@@ -26,7 +26,7 @@ class MyOrderSerializer(serializers.ModelSerializer):
             "transaction_id",
             "paid_amount",
             "amount_due",
-            "processed",
+            "delivered",
             "checkoutRequestId",
             "paid"
         )

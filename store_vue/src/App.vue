@@ -5,7 +5,7 @@
        <router-link to="/" class="navbar-item">
         <i class="fas fa-light fa-shoe-prints"></i>
         <i class="ml-2"></i>
-        <strong class="has-text-warning">Official Boots Kenya</strong>
+        <strong class="has-text-warning">Official Boots Collection</strong>
        </router-link>
        <a class="navbar-burger bck-dark" aria-label="menu" aria-expanded="false" data-target="navbar-menu" @click="showMobileMenu = !showMobileMenu">
          <span aria-hidden="true"></span>

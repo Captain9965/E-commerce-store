@@ -32,7 +32,10 @@
             </tfoot>
         </table>
         <div>
-            <button class="button is-black has-text-primary" @click="submitPayRequest" v-if="paymentPending" v-bind:class="{'is-loading': localLoading}"> Pay Now with Mpesa</button>
+    
+            <button class="button is-black has-text-primary" @click="submitPayRequest" v-if="paymentPending" v-bind:class="{'is-loading': localLoading}"> Pay Now / confirm</button>
+            <h2 v-else-if="orderDelivered" class="subtitle has-text-info"> Enjoy your shoes!</h2>
+            <h2 v-else class="subtitle has-text-primary"> Your order will be delivered within 24 hrs</h2>
         </div>
     </div>
 </template>
@@ -68,14 +71,21 @@ export default {
             await axios
                 .post('api/v1/order/pay/',this.order)
                 .then(response=>{
-                    if (sessionStorage.getItem('checkoutRequestID')){
-                        sessionStorage.removeItem('checkoutRequestID')
-                        sessionStorage.setItem('checkoutRequestID', response.data.CheckoutRequestID)
-                    } else{
-                        sessionStorage.setItem('checkoutRequestID', response.data.CheckoutRequestID)
+                    if(response.data.CheckoutRequestID){
+                        if (sessionStorage.getItem('checkoutRequestID')){
+                            sessionStorage.removeItem('checkoutRequestID')
+                            sessionStorage.setItem('checkoutRequestID', response.data.CheckoutRequestID)
+                        } else{
+                            sessionStorage.setItem('checkoutRequestID', response.data.CheckoutRequestID)
+                        }
+                        console.log(response.data.CheckoutRequestID)
+                        this.$router.push('/order/confirm')
                     }
-                    console.log(response.data.CheckoutRequestID)
-                    this.$router.push('/order/confirm')
+                    else if (response.data.Info){
+                        console.log(response.data.Info)
+                        this.$router.push('/order/success')
+                    }
+                    
                 })
                 /**@todo: how do I show errors on ui? */
                 .catch(error=>{
@@ -91,6 +101,9 @@ export default {
         },
         sendingPayRequest(){
             return this.$store.state.isLoading
+        },
+        orderDelivered(){
+            return this.order.delivered
         }
     }
 }

@@ -88,6 +88,7 @@
 </template>
 <script>
 import axios from 'axios'
+import { toast } from 'bulma-toast'
 export default {
     name: 'Checkout',
     data(){
@@ -145,6 +146,12 @@ export default {
             if (this.place === ''){
                 this.$store.dispatch('dispatchError', 'The delivery address is missing')
             }
+            if (this.phone === ''){
+                this.$store.dispatch('dispatchError', 'The Mpesa number is missing')
+            }
+            if (this.email === ''){
+                this.$store.dispatch('dispatchError', 'The email is missing')
+            }
             return !this.$store.state.errors.length
         },
         async sendPayRequest(){
@@ -171,14 +178,28 @@ export default {
                 .post('api/v1/checkout/',data)
                 .then(response=>{
                     this.$store.commit('clearCart')
-                    if (sessionStorage.getItem('checkoutRequestID')){
-                        sessionStorage.removeItem('checkoutRequestID')
-                        sessionStorage.setItem('checkoutRequestID', response.data.CheckoutRequestID)
-                    } else{
-                        sessionStorage.setItem('checkoutRequestID', response.data.CheckoutRequestID)
+                    if (this.payNow){
+                        if (sessionStorage.getItem('checkoutRequestID')){
+                            sessionStorage.removeItem('checkoutRequestID')
+                            sessionStorage.setItem('checkoutRequestID', response.data.CheckoutRequestID)
+                        } else{
+                            sessionStorage.setItem('checkoutRequestID', response.data.CheckoutRequestID)
+                        }
+                        console.log(response.data.CheckoutRequestID)
+                        this.$router.push('/order/confirm')
                     }
-                    console.log(response.data.CheckoutRequestID)
-                    this.$router.push('/order/confirm')
+                    else{
+                        toast({
+                            message: 'Your order has been received. Thanks for shopping with us!',
+                            type : 'is-success',
+                            dismissible : true,
+                            pauseOnHover : true,
+                            duration : 2000,
+                            position : 'bottom-right',
+                        })
+                        this.$router.push('/my-account')
+                    }
+                    
                     
                 })/** can  do better error handling  */
                 .catch(error=>{

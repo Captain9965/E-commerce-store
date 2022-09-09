@@ -15,7 +15,7 @@
                 <button class="button is-success mt-4" @click="confirm_order">Try again</button>
             </div>
             <div class="column is-12 has-text-centered" v-if="failed">
-                <p class="has-text-danger title">Confirmation failed.Retrying..</p>
+                <p class="has-text-success title">Confirmation failed.Retrying..</p>
                 <button class="button is-danger mt-4" @click="cancel_request">Cancel</button>
             </div>
             
@@ -43,6 +43,9 @@ export default {
         this.$store.commit('clearErrors')
         this.confirm_order()
     },
+    unmounted(){
+        this.stop_interval()
+    },
     methods:{
         get_checkoutRequestID(){
             let checkoutRequestID = ""
@@ -55,6 +58,7 @@ export default {
             this.failed = false
             this.cancelled = false
             this.confirming = true
+            this.confirmed = false
             this.$store.commit('setIsLoading', true)
             this.intervalID = setInterval(() => {
                 this.send_confirmation_request()
@@ -81,6 +85,8 @@ export default {
                 .catch(error=>{
                     console.log(error)
                     this.failed = true
+                    this.cancelled = false
+                    this.confirmed = false
                     this.confirming = false
                 })
         },
@@ -88,6 +94,7 @@ export default {
             this.failed = false
             this.confirming = false
             this.cancelled = true
+            this.confirmed = false
             this.stop_interval()
         },
         stop_interval(){

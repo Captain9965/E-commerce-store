@@ -13,9 +13,10 @@ class Order(models.Model):
     paid_amount = models.DecimalField(max_digits=8, decimal_places=2, blank=2, null=True)
     amount_due = models.DecimalField(max_digits=8, decimal_places= 2, blank= 2, null=True)
     paid = models.BooleanField(default=False, null=False)
-    processed = models.BooleanField(default=False, null=False)
-    transaction_id = models.CharField(max_length=50, null=True)
+    delivered = models.BooleanField(default=False, null=False)
+    transaction_id = models.CharField(max_length=50, null=True, blank=True)
     checkoutRequestId = models.CharField(max_length= 50, null=True)
+    result_description = models.CharField(max_length=200, null=True)
     class Meta:
         ordering = ['-created_at',]
     def __str__(self):

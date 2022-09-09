@@ -27,7 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-MPESA_API_BASE_URL = "856f-154-123-58-108.eu.ngrok.io"
+MPESA_API_BASE_URL = "fa96-154-123-127-24.eu.ngrok.io"
+MPESA_SHORT_CODE = "174379"
 # Application definition
 
 INSTALLED_APPS = [
