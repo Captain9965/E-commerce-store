@@ -6,7 +6,7 @@
             <a @click="decrementQuantity(item)" class="ml-2 mr-2 has-text-danger">-</a>
             <a @click="incrementQuantity(item)" class="has-text-primary">+</a>
         </td>
-
+        <td>{{item.size}}</td>
         <td>{{ getItemTotal(item).toFixed(2) }}</td>
         <td><button class="delete" @click="removeFromCart(item)"></button></td>
     </tr>

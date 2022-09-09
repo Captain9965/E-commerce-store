@@ -1,16 +1,18 @@
 <template>
     <div class="box mb-4">
         <h3 class="has-text-warning is-size-4 mb-6">Order #{{order.id}}</h3>
-        <h4 class="has-text-warning is-size-5">Products</h4>
-        <table class="bck-grey table is-fullwidth">
-            <head class="has-text-warning">
+        <h4 class="has-text-warning is-size-5 mb-4">Products</h4>
+        <table class="bck-grey has-text-warning table is-fullwidth">
+            <thead>
                 <tr>
-                    <th>Product</th>
-                    <th>Price</th>
-                    <th>Quantity</th>
-                    <th>Total</th>
+                    <th class="has-text-info">Product</th>
+                    <th class="has-text-info">Price</th>
+                    <th class="has-text-info">Quantity</th>
+                    <th class="has-text-info">Size</th>
+                    <th class="has-text-info">Total</th>
+                    <th ></th>
                 </tr>
-            </head>
+            </thead>
             <tbody class="has-text-warning">
                 <tr
                     v-for="item in order.items"
@@ -20,6 +22,7 @@
                     <td>{{ item.product.name }}</td>
                     <td>{{ item.product.price }}</td>
                     <td>{{ item.quantity }}</td>
+                    <td>{{item.size}}</td>
                     <td>Ksh.{{ parseInt(getItemTotal(item))}}</td>
                 </tr>
             </tbody>
@@ -27,6 +30,7 @@
                 <tr>
                     <td colspan="2" class="has-text-warning">Total</td>
                     <td class="has-text-warning">{{orderTotalLength(order)}}</td>
+                    <td></td>
                     <td class="has-text-warning">Ksh.{{orderTotalPrice(order)}} </td>
                 </tr>
             </tfoot>

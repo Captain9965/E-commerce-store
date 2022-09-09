@@ -11,6 +11,7 @@
                             <th class="has-text-warning">Product</th>
                             <th class="has-text-warning">Price</th>
                             <th class="has-text-warning">Quantity</th>
+                            <th class="has-text-warning">Size</th>
                             <th class="has-text-warning">Total</th>
                             <th></th>
                         </tr>
@@ -23,6 +24,7 @@
                             <td>{{item.product.name}}</td>
                             <td>Ksh.{{item.product.price}}</td>
                             <td>{{item.quantity}}</td>
+                            <td>{{item.size}}</td>
                             <td>Ksh.{{parseInt(getItemTotal(item))}}</td>
                        </tr>
                     </tbody>
@@ -30,6 +32,7 @@
                         <tr>
                             <td colspan="2" class="has-text-warning">Total</td>
                             <td class="has-text-warning">{{cartTotalLength}}</td>
+                            <td></td>
                             <td class="has-text-warning">Ksh.{{parseInt(cartTotalPrice)}}</td>
                         </tr>
                     </tfoot>
@@ -161,6 +164,7 @@ export default {
                 const obj = {
                     product: item.product.id,
                     quantity: item.quantity,
+                    size: item.size,
                     price: item.product.price * item.quantity
                 }
                 items.push(obj)

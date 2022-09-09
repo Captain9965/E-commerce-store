@@ -10,6 +10,7 @@ class MyOrderItemSerializer(serializers.ModelSerializer):
             "price",
             "product",
             "quantity",
+            "size"
         )
 class MyOrderSerializer(serializers.ModelSerializer):
     items = MyOrderItemSerializer(many =True)
@@ -37,6 +38,7 @@ class OrderItemSerializer(serializers.ModelSerializer):
             "price",
             "product",
             "quantity",
+            "size"
         )
 class OrderSerializer(serializers.ModelSerializer):
     items = OrderItemSerializer(many =True)
