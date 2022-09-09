@@ -8,10 +8,11 @@
                 <table class="bck-grey has-text-warning table is-fullwidth" v-if="cartTotalLength">
                     <thead>
                         <tr>
-                            <th class="has-text-warning">Product</th>
-                            <th class="has-text-warning">Price</th>
-                            <th class="has-text-warning">Quantity</th>
-                            <th class="has-text-warning">Total</th>
+                            <th class="has-text-info">Product</th>
+                            <th class="has-text-info">Price</th>
+                            <th class="has-text-info">Quantity</th>
+                            <th class="has-text-info">Size</th>
+                            <th class="has-text-info">Total</th>
                             <th ></th>
                         </tr>
                     </thead>

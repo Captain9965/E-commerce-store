@@ -11,11 +11,15 @@
           <div class="column is-3">
               <h2 class="subtitle has-text-warning">Information</h2>
               <p class="has-text-primary-dark"><strong class="has-text-warning">Price: </strong>Ksh.{{product.price}}</p>
-
+              <div class=" mt-4 select is-rounded">
+                <select v-model="size">
+                    <option v-for="i in [39, 40, 41, 42, 43, 44, 45]">{{i}}</option>
+                </select>
+              </div>
               <div class="field has-addons mt-6">
                   <div class="control">
-                      <input type="number" class="input" min="1" v-model="quantity" >
-                  </div>
+                        <input type="number" class="input" min="1" v-model="quantity" >
+                    </div>
                   <div class="control">
                       <a class="button is-dark" @click="addToCart">Add to cart</a>
                   </div>
@@ -32,7 +36,8 @@ export default{
     data(){
         return {
             product:{},
-            quantity: 1
+            quantity: 1,
+            size: 39
         }
     },
     mounted(){
@@ -59,9 +64,13 @@ export default{
             if (isNaN(this.quantity)|| this.quantity < 1){
                 this.quantity = 1
             }
+            if (isNaN(this.size) || this.size < 39){
+                this.quantity = 39
+            }
             const item = {
                 product : this.product,
-                quantity : this.quantity
+                quantity : this.quantity,
+                size : this.size
             }
             this.$store.commit('addToCart', item)
             toast({

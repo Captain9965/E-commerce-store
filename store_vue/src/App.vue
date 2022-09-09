@@ -5,7 +5,7 @@
        <router-link to="/" class="navbar-item">
         <i class="fas fa-light fa-shoe-prints"></i>
         <i class="ml-2"></i>
-        <strong class="has-text-warning">Official Boots Kenya</strong>
+        <strong class="has-text-warning">Official Boots Collection</strong>
        </router-link>
        <a class="navbar-burger bck-dark" aria-label="menu" aria-expanded="false" data-target="navbar-menu" @click="showMobileMenu = !showMobileMenu">
          <span aria-hidden="true"></span>
@@ -59,6 +59,14 @@
    <section class="section section-flex">
 
     <router-view/>
+    <div class="notification is-danger mt-4" v-if="this.$store.state.errors.length">
+      <button class="delete" @click="clear_error"></button>
+      <p v-for="error in this.$store.state.errors" v-bind:key="error">{{error}}</p>
+    </div>
+    <div class="notification is-success mt-4" v-if="this.$store.state.infos.length">
+      <button class="delete" @click="clear_info"></button>
+      <p v-for="info in this.$store.state.infos" v-bind:key="info">{{info}}</p>
+    </div>
    </section>
    <footer class="pb-6">
      <p class="has-text-centered has-text-warning">Copyright (c) 2022</p>
@@ -67,6 +75,7 @@
 </template>
 <script>
 import axios from 'axios'
+import { toast} from 'bulma-toast'
 export default{
   data(){
     return{
@@ -89,6 +98,14 @@ export default{
         totalLength += this.$store.state.cart.items[i].quantity
       }
       return totalLength
+    }
+  },
+  methods:{
+    clear_info(){
+      this.$store.commit('clearInfos')
+    },
+    clear_error(){
+      this.$store.commit('clearErrors')
     }
   }
 }

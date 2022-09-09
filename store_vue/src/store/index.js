@@ -8,10 +8,16 @@ export default createStore({
     isAuthenticated: false,
     token:'',
     isLoading:false,
+    errors: [],
+    infos: [],
+    errorTimeoutID: null,
+    infoTimeoutID: null
 
   },
   mutations: {
     initializeStore(state){
+      state.errors = []
+      state.infos = []
       if (localStorage.getItem('cart')){
         state.cart = JSON.parse(localStorage.getItem('cart'))
       } else{
@@ -26,7 +32,9 @@ export default createStore({
       }
     },
     addToCart(state, item){
-      const exists = state.cart.items.filter(i => i.product.id === item.product.id)
+      const exists = state.cart.items.filter(i => {
+        return (i.product.id === item.product.id && i.size == item.size)
+      })
       if (exists.length){
         exists[0].quantity = parseInt(exists[0].quantity) + parseInt(item.quantity)
       } else{
@@ -48,10 +56,40 @@ export default createStore({
     clearCart(state){
       state.cart = { items: [] }
       localStorage.setItem('cart', JSON.stringify(state.cart))
+    },
+    addError(state, error){
+      state.errors.push(error)
+    },
+    clearErrors(state){
+      if (state.errorTimeoutID){
+        clearTimeout(state.errorTimeoutID)
+      }
+      state.errors = []
+    },
+    addInfo(state, info){
+      state.infos.push(info)
+    },
+    clearInfos(state){
+      if (state.infoTimeoutID){
+        clearTimeout(state.infoTimeoutID)
+      }
+      state.infos = []
     }
   },
  
   actions: {
+    dispatchError({ commit, state }, error){
+      commit('addError', error)
+        state.errorTimeoutID = setTimeout(() => {
+        commit('clearErrors')
+      }, 5000);
+    },
+    dispatchInfo({ commit, state }, info){
+      commit('addInfo', info)
+        state.infoTimeoutID = setTimeout(() => {
+        commit('clearInfos')
+      }, 10000);
+    }
   },
   modules: {
   }

@@ -1,16 +1,18 @@
 <template>
     <div class="box mb-4">
         <h3 class="has-text-warning is-size-4 mb-6">Order #{{order.id}}</h3>
-        <h4 class="has-text-warning is-size-5">Products</h4>
-        <table class="bck-grey table is-fullwidth">
-            <head class="has-text-warning">
+        <h4 class="has-text-warning is-size-5 mb-4">Products</h4>
+        <table class="bck-grey has-text-warning table is-fullwidth">
+            <thead>
                 <tr>
-                    <th>Product</th>
-                    <th>Price</th>
-                    <th>Quantity</th>
-                    <th>Total</th>
+                    <th class="has-text-info">Product</th>
+                    <th class="has-text-info">Price</th>
+                    <th class="has-text-info">Quantity</th>
+                    <th class="has-text-info">Size</th>
+                    <th class="has-text-info">Total</th>
+                    <th ></th>
                 </tr>
-            </head>
+            </thead>
             <tbody class="has-text-warning">
                 <tr
                     v-for="item in order.items"
@@ -20,6 +22,7 @@
                     <td>{{ item.product.name }}</td>
                     <td>{{ item.product.price }}</td>
                     <td>{{ item.quantity }}</td>
+                    <td>{{item.size}}</td>
                     <td>Ksh.{{ parseInt(getItemTotal(item))}}</td>
                 </tr>
             </tbody>
@@ -27,12 +30,16 @@
                 <tr>
                     <td colspan="2" class="has-text-warning">Total</td>
                     <td class="has-text-warning">{{orderTotalLength(order)}}</td>
+                    <td></td>
                     <td class="has-text-warning">Ksh.{{orderTotalPrice(order)}} </td>
                 </tr>
             </tfoot>
         </table>
         <div>
-            <button class="button is-black has-text-primary" @click="submitPayRequest" v-if="paymentPending"> Pay Now with Mpesa</button>
+    
+            <button class="button is-black has-text-primary" @click="submitPayRequest" v-if="paymentPending" v-bind:class="{'is-loading': localLoading}"> Pay Now / confirm</button>
+            <h2 v-else-if="orderDelivered" class="subtitle has-text-info"> Enjoy your shoes!</h2>
+            <h2 v-else class="subtitle has-text-primary"> Your order will be delivered within 24 hrs</h2>
         </div>
     </div>
 </template>
@@ -42,7 +49,7 @@ export default {
     name: 'OrderSummary',
     data(){
         return{
-            errors: [],
+            localLoading: false
         }
     },
     props:{
@@ -63,21 +70,33 @@ export default {
             },0)
         },
         async submitPayRequest(){
-            this.errors = []
-            this.$store.commit('setIsLoading', true)
-            console.log("Sending request with order")
-            console.log(this.order)
+            this.$store.dispatch('dispatchInfo','Sending request...')
+            this.localLoading = true
             await axios
                 .post('api/v1/order/pay/',this.order)
                 .then(response=>{
-                    this.$router.push('/cart/success/')
+                    if(response.data.CheckoutRequestID){
+                        if (sessionStorage.getItem('checkoutRequestID')){
+                            sessionStorage.removeItem('checkoutRequestID')
+                            sessionStorage.setItem('checkoutRequestID', response.data.CheckoutRequestID)
+                        } else{
+                            sessionStorage.setItem('checkoutRequestID', response.data.CheckoutRequestID)
+                        }
+                        console.log(response.data.CheckoutRequestID)
+                        this.$router.push('/order/confirm')
+                    }
+                    else if (response.data.Info){
+                        console.log(response.data.Info)
+                        this.$router.push('/order/success')
+                    }
+                    
                 })
-                /**@todo: show errors on ui */
+                /**@todo: how do I show errors on ui? */
                 .catch(error=>{
-                    this.errors.push('something went wrong. please try again')
+                    this.$store.dispatch('dispatchError','Something went wrong, try again')
                     console.log(error)
                 })
-            this.$store.commit('setIsLoading', false)
+            this.localLoading = false
         }
     },
     computed:{
@@ -86,6 +105,9 @@ export default {
         },
         sendingPayRequest(){
             return this.$store.state.isLoading
+        },
+        orderDelivered(){
+            return this.order.delivered
         }
     }
 }

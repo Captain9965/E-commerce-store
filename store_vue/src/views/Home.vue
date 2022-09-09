@@ -8,7 +8,7 @@
       </div>
       <div class="hero-body has-text-centered">
         <p class="title mb=6 has-text-warning">
-          Welcome to Official Boots Kenya
+          Welcome to Official Boots Collection
         </p>
         <p class="subtitle has-text-warning">
           We offer the best value for your money!
