@@ -1,4 +1,4 @@
-"""Gunicorn *development* config file"""
+"""Gunicorn config file"""
 
 # Django WSGI application path in pattern MODULE_NAME:VARIABLE_NAME
 wsgi_app = "store_django.wsgi:application"
