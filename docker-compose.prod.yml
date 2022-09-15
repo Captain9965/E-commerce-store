@@ -6,8 +6,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.prod
-    ports:
-      - "8000:8000"
+    expose:
+      - 8000
     volumes:
       - ./app:/app
       - static_volume:/app/static
@@ -40,7 +40,7 @@ services:
     build:
       ./app/store_vue
     ports:
-      - "80:80"
+      - "1337:80"
     restart:
       always
     volumes:

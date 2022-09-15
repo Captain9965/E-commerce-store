@@ -29,6 +29,7 @@ ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
 
 MPESA_API_BASE_URL = os.environ.get('MPESA_API_BASE_URL')
 MPESA_SHORT_CODE = os.environ.get('MPESA_SHORT_CODE')
+BASE_REQUEST_URL = os.environ.get('BASE_REQUEST_URL', 'http://127.0.0.1:8000') 
 # Application definition
 
 INSTALLED_APPS = [
