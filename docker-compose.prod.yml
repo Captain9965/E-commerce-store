@@ -5,15 +5,23 @@ services:
     container_name: gst_django
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.prod
     ports:
       - "8000:8000"
     volumes:
       - ./app:/app
+      - static_volume:/app/static
+      - media_volume:/app/media
     command: >
-      sh -c "python3 manage.py runserver 0.0.0:8000"
+      sh -c "
+              python manage.py collectstatic
+              gunicorn -c config/gunicorn/dev.py
+              
+              "
     env_file:
-      - ./.dev.env
+      - ./.prod.env
+    restart:
+      always
     depends_on:
       - db
 
@@ -21,19 +29,12 @@ services:
     container_name: gst_db
     image: postgres:12-alpine
     env_file:
-      - ./.dev.env
+      - ./.db.prod.env
     ports:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
 
-  # frontend:
-  #   build:
-  #     ./app/store_vue
-  #   command: >
-  #     sh -c "npm run build"
-  #   ports:
-  #     - "8080:8080"
   nginx:
     container_name: gst_nginx
     build:
@@ -42,7 +43,13 @@ services:
       - "80:80"
     restart:
       always
-
+    volumes:
+      - static_volume:/app/static
+      - media_volume:/app/media
+    depends_on:
+      - app
 
 volumes:
   pgdata:
+  static_volume:
+  media_volume:

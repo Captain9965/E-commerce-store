@@ -18,9 +18,11 @@ cd store_vue && npm run serve
 ## To be implemented:
 >1. User can cancel orders
 >2. Admin order management frontend for easy management of orders
->3. Dockerize the entire application
+>3. Dockerize the entire application -done
+>4. Configure nginx server and gunicorn wsgi server - done
+
 
 
 ## Bug tracker:
 >1. User is logged out on refresh
->2. 
+>2. Loading images in production

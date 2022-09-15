@@ -3,7 +3,7 @@
 //test_stk_endpoint
 
 ###
-GET http://{{host}}/view/
+GET http://{{host}}/api/v1/latest-products/
 Host:{{host}}
 Content-Type: application/json
 

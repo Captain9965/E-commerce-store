@@ -20,15 +20,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-s9uak&^0uico%_-yw6+o&dt06+6s+b^*pv)hzu7-!3(kw^9atl'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = int(os.environ.get('DEBUG', default=0))
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
 
-MPESA_API_BASE_URL = "fa96-154-123-127-24.eu.ngrok.io"
-MPESA_SHORT_CODE = "174379"
+MPESA_API_BASE_URL = os.environ.get('MPESA_API_BASE_URL')
+MPESA_SHORT_CODE = os.environ.get('MPESA_SHORT_CODE')
 # Application definition
 
 INSTALLED_APPS = [
@@ -48,9 +48,7 @@ INSTALLED_APPS = [
     'order',
     'core'
 ]
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8080"
-]
+CORS_ALLOWED_ORIGINS = os.environ.get("CORS_ALLOWED_ORIGINS").split(" ")
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -89,11 +87,12 @@ WSGI_APPLICATION = 'store_django.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'HOST': os.environ.get('DB_HOST'),
-        'NAME': os.environ.get('DB_NAME'),
-        'USER': os.environ.get('DB_USER'),
-        'PASSWORD': os.environ.get('DB_PASS'),
+        'ENGINE': os.environ.get('DB_ENGINE', "django.db.backends.sqlite3"),
+        'HOST': os.environ.get('DB_HOST', "localhost"),
+        'NAME': os.environ.get('DB_NAME', BASE_DIR / "db.sqlite3"),
+        'USER': os.environ.get('DB_USER', "user"),
+        'PASSWORD': os.environ.get('DB_PASS', "password"),
+        'PORT': os.environ.get('DB_PORT', "5432"),
 
     }
 }
@@ -143,4 +142,5 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_URL ='/media/'
 MEDIA_ROOT = BASE_DIR / 'media/'
+STATIC_ROOT = BASE_DIR / 'static/'
 
