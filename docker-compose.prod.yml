@@ -21,7 +21,7 @@ services:
     env_file:
       - ./.prod.env
     restart:
-      always
+      on-failure
     depends_on:
       - db
 
@@ -42,7 +42,7 @@ services:
     ports:
       - "1337:80"
     restart:
-      always
+      on-failure
     volumes:
       - static_volume:/app/static
       - media_volume:/app/media
