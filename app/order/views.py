@@ -186,7 +186,7 @@ def send_stk_request(phoneNumber, amount):
             "ApplicationId": "0001"
         }
     headers = {"Content-Type": "application/json"}
-    api_url = f"https://{MPESA_API_BASE_URL}/stk/"
+    api_url = f"{MPESA_API_BASE_URL}/stk/"
     print("Sending stk push request........");
     response = requests.post(api_url,json=data, headers=headers)
     return response
@@ -198,7 +198,7 @@ def send_status_request(checkoutRequestID):
             "CheckoutRequestID": checkoutRequestID
         }
     headers = {"Content-Type": "application/json"}
-    api_url = f"https://{MPESA_API_BASE_URL}/stk/checkStatus"
+    api_url = f"{MPESA_API_BASE_URL}/stk/checkStatus"
     print("Sending status request........");
     response = requests.post(api_url,json=data, headers=headers)
     return response
