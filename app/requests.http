@@ -1,0 +1,10 @@
+@host=127.0.0.1:1337
+
+//test_stk_endpoint
+
+###
+GET http://{{host}}/api/v1/latest-products/
+Host:{{host}}
+Content-Type: application/json
+
+###

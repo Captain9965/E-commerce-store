@@ -1,7 +1,9 @@
 .DS_Store
 node_modules
 /dist
-media/uploads/*
+app/media/uploads/*
+app/staticfiles/*
+app/static/*
 
 # local env files
 .env.local
@@ -24,3 +26,4 @@ pnpm-debug.log*
 /venv
 *.pyc
 *.Identifier
+*.env
