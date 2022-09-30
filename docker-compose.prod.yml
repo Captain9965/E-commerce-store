@@ -40,7 +40,7 @@ services:
     build:
       ./app/store_vue
     ports:
-      - "1337:80"
+      - "80:80"
     restart:
       on-failure
     volumes:
