@@ -26,6 +26,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 DEBUG = int(os.environ.get('DEBUG', default=0))
 
 ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
+CSRF_TRUSTED_ORIGINS = os.environ.get("CSRF_TRUSTED_ORIGINS").split(" ")
 
 MPESA_API_BASE_URL = os.environ.get('MPESA_API_BASE_URL')
 MPESA_SHORT_CODE = os.environ.get('MPESA_SHORT_CODE')
