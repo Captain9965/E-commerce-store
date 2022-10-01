@@ -4,5 +4,5 @@ import router from './router'
 import store from './store'
 import axios from 'axios'
 
-axios.defaults.baseURL = 'http://52.91.162.34:80'
+axios.defaults.baseURL = 'https://officialbootscollection.com'
 createApp(App).use(store).use(router, axios).mount('#app')
