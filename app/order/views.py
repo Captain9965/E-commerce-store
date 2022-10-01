@@ -180,7 +180,7 @@ def send_stk_request(phoneNumber, amount):
     """
     data = {
             "phone": phoneNumber,
-            "amount": "1",
+            "amount": amount,
             "shortcode": f"{MPESA_SHORT_CODE}",
             "AccountReference": "Boots Kenya",
             "ApplicationId": "0001"

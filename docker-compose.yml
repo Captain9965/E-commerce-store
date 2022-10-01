@@ -41,8 +41,9 @@ services:
     ports:
       - "80:80"
     restart:
-      always
-
+      on-failure
+    depends_on:
+      - app
 
 volumes:
   pgdata:
