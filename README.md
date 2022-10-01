@@ -25,4 +25,4 @@ cd store_vue && npm run serve
 
 ## Bug tracker:
 >1. User is logged out on refresh
->2. Loading images in production
+>2. What happens when there are no products?

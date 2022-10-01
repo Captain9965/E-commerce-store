@@ -22,19 +22,6 @@ services:
       - ./.prod.env
     restart:
       on-failure
-    depends_on:
-      - db
-
-  db:
-    container_name: gst_db
-    image: postgres:12-alpine
-    env_file:
-      - ./.db.prod.env
-    ports:
-      - "5432:5432"
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-
   nginx:
     container_name: gst_nginx
     build:
@@ -50,6 +37,5 @@ services:
       - app
 
 volumes:
-  pgdata:
   static_volume:
   media_volume:
